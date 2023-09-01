@@ -38,21 +38,21 @@ describe("Given I am connected as an employee", () => {
 
 
 
-    // test("Then bill icon for viewing the receipt must be visible", async () => {
+    test("Then bill icon for viewing the receipt must be visible", async () => {
 
-    //   Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-    //   window.localStorage.setItem('user', JSON.stringify({
-    //     type: 'Employee'
-    //   }))
-    //   const root = document.createElement("div")
-    //   root.setAttribute("id", "root")
-    //   document.body.append(root)
-    //   router()
-    //   window.onNavigate(ROUTES_PATH.Bills)
-    //   await waitFor(() => screen.getByTestId('icon-eye'))
-    //   const iconEye = screen.getByTestId('icon-eye')
-    //   //to-do write expect expression
-    //   expect(iconEye).toBeTruthy(); // ce matcher jest est utiliser pour verifier si un element est present sur le DOM.
-    // })
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }))
+      const root = document.createElement("div")
+      root.setAttribute("id", "root")
+      document.body.append(root)
+      router()
+      window.onNavigate(ROUTES_PATH.Bills)
+      // await waitFor(() => screen.getByTestId('icon-eye'))
+      const iconEye = screen.getAllByTestId('icon-eye')
+      //to-do write expect expression
+      expect(iconEye).toBeTruthy(); // ce matcher jest est utiliser pour verifier si un element est present sur le DOM.
+    })
   })
 })

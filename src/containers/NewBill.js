@@ -82,12 +82,13 @@ export default class NewBill {
       .catch(error => console.error(error))
     }
   }
+  checkFileExtension = (filename) => {
+    // Liste des extensions autorisées (exemple : .pdf, .jpg, .png)
+    var allowedExtensions = ['.jpeg', '.jpg', '.png'];
+    var fileExtension = filename.slice(filename.lastIndexOf('.')).toLowerCase();
+    console.log('***',fileExtension,'*****');
+    return allowedExtensions.includes(fileExtension);
+  }
 }
 
-var checkFileExtension = (filename) => {
-  // Liste des extensions autorisées (exemple : .pdf, .jpg, .png)
-  var allowedExtensions = ['.jpeg', '.jpg', '.png'];
-  var fileExtension = filename.slice(filename.lastIndexOf('.')).toLowerCase();
-  console.log('***',fileExtension,'*****');
-  return allowedExtensions.includes(fileExtension);
-}
+
