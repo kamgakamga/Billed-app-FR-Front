@@ -82,7 +82,7 @@ export default class NewBill {
       .catch(error => console.error(error))
     }
   }
-  checkFileExtension = (filename) => {
+   checkFileExtension = (filename) => {
     // Liste des extensions autorisées (exemple : .pdf, .jpg, .png)
     var allowedExtensions = ['.jpeg', '.jpg', '.png'];
     var fileExtension = filename.slice(filename.lastIndexOf('.')).toLowerCase();
