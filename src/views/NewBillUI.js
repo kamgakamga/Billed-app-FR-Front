@@ -55,11 +55,11 @@ export default () => {
                   </div>
                   <div class="col-half">
                    <div>
-                        <span class="file-error" accept=".jpg, .png,.jpeg " style="color:red"><strong>Seules les extensions .jpg , .png, .jpeg sont autorisés.</strong><span/>
+                        <span class="file-error" accept=".jpg, .png,.jpeg" style="color:red"><strong>Seules les extensions .jpg , .png, .jpeg sont autorisés.</strong><span/>
                    <div/>
                     <label for="file" class="bold-label">Justificatif</label>
                     <input required type="file" class="form-control blue-border" data-testid="file" />
-                    <span class="file-error" accept=".jpg, .png,.jpeg" style="visibility:hidden; color:red" >Fichier Incorect veillez sectionné un autre.<span/>
+                    <span class="file-error" accept=".jpg, .png, .jpeg" style="visibility:hidden; color:red" >Fichier Incorect veillez sectionné un autre.<span/>
                   </div>
                 </div>
             </div>

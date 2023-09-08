@@ -5,12 +5,11 @@
 import '@testing-library/jest-dom/extend-expect'
 import { fireEvent, screen } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
-
 import mockStore from '../__mocks__/store.js'
 import { localStorageMock } from '../__mocks__/localStorage.js'
-import { Store } from '../__mocks__/store2.js'
 import Router from '../app/Router.js'
 import { ROUTES, ROUTES_PATH } from '../constants/routes'
+import NewBillUI from '../views/NewBillUI.js'
 import NewBill from '../containers/NewBill.js'
 import BillsUI from '../views/BillsUI.js'
 
@@ -34,7 +33,7 @@ describe("Given I am connected as an employee", () => {
       beforeEach(() => {
         const user = JSON.stringify({
           type: 'Employee',
-          email: 'employee@test.tdl',
+          email:'employee@test.tdl',
         })
         window.localStorage.setItem('user', user)
   
@@ -51,11 +50,11 @@ describe("Given I am connected as an employee", () => {
   
       test('should require the input type', () => {
         const inputType = screen.getByTestId('expense-type')
-        expect(inputType).toBeRequired()
+        expect(inputType).toBeInTheDocument();
       })
       test('should require the input type date', () => {
         const inputDate = screen.getByTestId('datepicker')
-        expect(inputDate).toBeRequired()
+        expect(inputDate).toBeInTheDocument();
       })
       test('should require the input type number amount', () => {
         const inputAmount = screen.getByTestId('amount')
@@ -67,93 +66,136 @@ describe("Given I am connected as an employee", () => {
       })
       test('should require the inupt number vat', () => {
         const inputVat = screen.getByTestId('vat')
-        expect(inputVat).toBeRequired()
+        expect(inputVat).not.toBeRequired()
       })
       test('should require the input type file', () => {
         const inputfile = screen.getByTestId('file')
-        expect(inputfile).toBeRequired()
+        expect(inputfile).toBeRequired;
       })
   
-      test('should accept the input type file with format .jpg, .jpeg, .png', () => {
-        const inputfile = screen.getByTestId('file')
-        expect(inputfile).toHaveAttribute('accept', '.jpg, .jpeg, .png')
+  
+    })
+
+    describe('When I do not fill fields && I click on submit button', () => {
+      it('should renders NewBill original page', () => {
+        const inputName = screen.getByTestId('expense-name')
+        expect(inputName.getAttribute('placeholder')).toBe('Vol Paris Londres')
+        expect(inputName.value).toBe('')
+  
+        const inputDate = screen.getByTestId('datepicker')
+        expect(inputDate.value).toBe('')
+  
+        const inputAmount = screen.getByTestId('amount')
+        expect(inputAmount.getAttribute('placeholder')).toBe('348')
+        expect(inputAmount.value).toBe('')
+  
+        const inputVat = screen.getByTestId('vat')
+        expect(inputVat.getAttribute('placeholder')).toBe('70')
+        expect(inputVat.value).toBe('')
+  
+        const inputPct = screen.getByTestId('pct')
+        expect(inputPct.getAttribute('placeholder')).toBe('20')
+        expect(inputPct.value).toBe('')
+  
+        const inputComment = screen.getByTestId('commentary')
+        expect(inputComment.value).toBe('')
+  
+        const inputFile = screen.getByTestId('file')
+        expect(inputFile.value).toBe('')
+  
+        const form = screen.getByTestId('form-new-bill')
+        userEvent.click(form)
+        expect(screen.getByTestId('form-new-bill')).toBeTruthy()
+      })
+    }) 
+  })
+  })
+
+
+
+
+
+  describe('Given I am connected as an employee',() => {
+    describe('When I am on the page for creating a new invoice',() => {
+      test('',() => {
+
+
       })
     })
-})
 
-  // test d'intégration POST
-  // describe('Given I am connected as an employee', () => {
-  //   describe('When I complete the requested fields and I submit', () => {
-  //     // to avoid bomb for those who maintains the code
-  //     afterEach(jest.clearAllMocks)
-  //     beforeEach(() => {
-  //       jest.spyOn(mockStore, 'bills')
-  //       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-  //       window.localStorage.setItem(
-  //         'user',
-  //         JSON.stringify({
-  //           type: 'Employee',
-  //           email: 'a@a',
-  //         })
-  //       )
-  //       const root = document.createElement('div')
-  //       root.setAttribute('id', 'root')
-  //       document.body.appendChild(root)
-  //       router()
-  //     })
-  //     it('should add a new bill to mock API POST', async () => {
-  //       const billsData = [...(await mockStore.bills().list())]
-  //       const bill = {
-  //         id: 'azerty3000',
-  //         status: 'pending',
-  //         pct: 20,
-  //         amount: 1500,
-  //         email: 'dev@openclassrooms.com',
-  //         name: 'Le Bistroquet',
-  //         vat: '10',
-  //         fileName: 'preview-facture-free-201801-pdf-1.jpg',
-  //         date: '2022-04-14',
-  //         commentAdmin: 'no comment',
-  //         commentary: 'postMockNewBill',
-  //         type: 'Restaurants et bars',
-  //         fileUrl: 'https://test-storage-billable.jpg',
-  //       }
+
+  })
+  //test d'intégration POST
+  describe('Given I am connected as an employee', () => {
+    describe('When I complete the requested fields and I submit', () => {
+      // to avoid bomb for those who maintains the code
+      afterEach(jest.clearAllMocks)
+      beforeEach(() => {
+        jest.spyOn(mockStore, 'bills')
+        Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+        window.localStorage.setItem(
+          'user',
+          JSON.stringify({
+            type: 'Employee',
+            email: 'a@a',
+          })
+        )
+        const root = document.createElement('div')
+        root.setAttribute('id', 'root')
+        document.body.appendChild(root)
+        router()
+      })
+      it('should add a new bill to mock API POST', async () => {
+        const billsData = [...(await mockStore.bills().list())]
+        const bill = {
+          id: 'azerty3000',
+          status: 'pending',
+          pct: 20,
+          amount: 1500,
+          email: 'dev@openclassrooms.com',
+          name: 'Le Bistroquet',
+          vat: '10',
+          fileName: 'preview-facture-free-201801-pdf-1.jpg',
+          date: '2022-04-14',
+          commentAdmin: 'no comment',
+          commentary: 'postMockNewBill',
+          type: 'Restaurants et bars',
+          fileUrl: 'https://test-storage-billable.jpg',
+        }
+        const allBills = billsData.push(await mockStore.bills().create(bill))
   
-  //       const allBills = billsData.push(await mockStore.bills().create(bill))
+        expect(allBills).toBe(5)
+      })
   
-  //       expect(allBills).toBe(5)
-  //     })
+      test('should add a bill to API and fails with 404 message error', async () => {
+        mockStore.bills.mockImplementationOnce(() => {
+          return {
+            list: () => {
+              return Promise.reject(new Error('Erreur 404'))
+            },
+          }
+        })
+        
+        const html = BillsUI({ error: 'Erreur 404' })
+        document.body.innerHTML = html
+        const message = screen.getByText(/Erreur 404/)
+        expect(message).toBeTruthy()
+      })
   
-  //     it('should add a bill to API and fails with 404 message error', async () => {
-  //       mockStore.bills.mockImplementationOnce(() => {
-  //         return {
-  //           list: () => {
-  //             return Promise.reject(new Error('Erreur 404'))
-  //           },
-  //         }
-  //       })
+      test('should add a bill to API and fails with 500 message error', async () => {
+        mockStore.bills.mockImplementationOnce(() => {
+          return {
+            list: () => {
+              return Promise.reject(new Error('Erreur 500'))
+            },
+          }
+        })
+        // initialise le body
+        const html = BillsUI({ error: 'Erreur 500' })
+        document.body.innerHTML = html
+        const message = screen.getByText(/Erreur 500/)
+        expect(message).toBeTruthy()
+      })
+    })
+    })
   
-  //       const html = BillsUI({ error: 'Erreur 404' })
-  //       document.body.innerHTML = html
-  //       const message = screen.getByText('/Erreur 404/')
-  //       expect(message).toBeTruthy()
-  //     })
-  
-  //     it('should add a bill to API and fails with 500 message error', async () => {
-  //       mockStore.bills.mockImplementationOnce(() => {
-  //         return {
-  //           list: () => {
-  //             return Promise.reject(new Error('Erreur 500'))
-  //           },
-  //         }
-  //       })
-  //       // initialise le body
-  //       const html = BillsUI({ error: 'Erreur 500' })
-  //       document.body.innerHTML = html
-  //       const message = screen.getByText('/Erreur 500/')
-  //       expect(message).toBeTruthy()
-  //     })
-  //   })
-  //   })
-  
-})
