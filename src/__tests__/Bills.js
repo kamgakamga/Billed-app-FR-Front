@@ -15,9 +15,6 @@ import router from "../app/Router.js";
 const onNavigate = (pathname) => {
 	document.body.innerHTML = ROUTES({ pathname })
 }
-const monMock= jest.fn();
-
-console.log('value',monMock);
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
