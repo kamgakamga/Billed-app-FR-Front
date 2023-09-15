@@ -15,6 +15,7 @@ export default class NewBill {
     this.billId = null
     new Logout({ document, localStorage, onNavigate })
   }
+
     handleChangeFile = e => {
       e.preventDefault()
       const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
@@ -24,15 +25,13 @@ export default class NewBill {
       const email = JSON.parse(localStorage.getItem("user")).email
       formData.append('file', file)
       formData.append('email', email)
-      if(!checkFileExtension(fileName)) {
+      if(!this.checkFileExtension(fileName)) {
         const error = this.document.querySelector(`[class="file-error"]`);
-        console.log('error',error);
         error.style.visibility = 'visible';
         this.document.querySelector(`input[data-testid="file"]`).value= "";
         //this.onNavigate(ROUTES_PATH['NewBill'])
         return;
         } 
-
       this.store
         .bills()
         .create({
@@ -48,6 +47,9 @@ export default class NewBill {
           this.fileName = fileName
         }).catch(error => console.error(error))
     }
+      
+
+
   handleSubmit = e => {
     e.preventDefault()
     console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
@@ -81,13 +83,13 @@ export default class NewBill {
       .catch(error => console.error(error))
     }
   }
-   
+  
+  checkFileExtension = (filename) => {
+    // Liste des extensions autorisées (exemple : .pdf, .jpg, .png)
+    var allowedExtensions = ['.jpeg', '.jpg', '.png'];
+    var fileExtension = filename.slice(filename.lastIndexOf('.')).toLowerCase();
+    return allowedExtensions.includes(fileExtension);
+  }
 }
 
-checkFileExtension = (filename) => {
-  // Liste des extensions autorisées (exemple : .pdf, .jpg, .png)
-  var allowedExtensions = ['.jpeg', '.jpg', '.png'];
-  var fileExtension = filename.slice(filename.lastIndexOf('.')).toLowerCase();
-  console.log('***',fileExtension,'*****');
-  return allowedExtensions.includes(fileExtension);
-}
+

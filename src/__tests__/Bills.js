@@ -88,11 +88,29 @@ describe("Given I am connected as an employee", () => {
 //test d'intégration GET
 describe('Given I am a user connected as employee', () => {
 	describe('When I am on Bills page', () => {
+
+
+		// test("fetches bills from mock API GET", async () => {
+		// 	localStorage.setItem("user", JSON.stringify({ type: "Admin", email: "a@a" }));
+		// 	const root = document.createElement("div")
+		// 	root.setAttribute("id", "root")
+		// 	document.body.append(root)
+		// 	router()
+		// 	window.onNavigate(ROUTES_PATH.Dashboard)
+		// 	await waitFor(() => screen.getByText("Validations"))
+		// 	const contentPending  = await screen.getByText("En attente (1)")
+		// 	expect(contentPending).toBeTruthy()
+		// 	const contentRefused  = await screen.getByText("Refusé (2)")
+		// 	expect(contentRefused).toBeTruthy()
+		// 	expect(screen.getByTestId("title")).toBeTruthy()
+		//       })
+
+
 		test('fetches bills from mock API GET', async () => {
 
-     //Je charge le dom avec les factures
+                         //Je charge le dom avec les factures
 			document.body.innerHTML = BillsUI({ data: bills })
-      //Je charge l'utilisateur dans le localStorage
+                        //Je charge l'utilisateur dans le localStorage
 			localStorage.setItem('user', JSON.stringify({ type: 'Employee', email: 'a@a' }))
 			const root = document.createElement('div')
 			root.setAttribute('id', 'root')
@@ -101,6 +119,8 @@ describe('Given I am a user connected as employee', () => {
 			window.onNavigate(ROUTES_PATH.Bills)
 			await waitFor(() => screen.getByTestId('tbody'))
 			expect(screen.getByTestId('tbody').innerHTML).toBeTruthy()
+			const title = screen.getByTestId("title");
+			expect(title).toBeTruthy()
 		})
 
 		describe('When an error occurs on API', () => {
