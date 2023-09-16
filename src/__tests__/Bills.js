@@ -82,30 +82,39 @@ describe("Given I am connected as an employee", () => {
 			expect(handleClickIconEye).toHaveBeenCalled()
 			expect(screen.getByTestId('modaleFileEmployee')).toBeTruthy()
 		})
+
+		test('When I click on the new bill button, I go to the page for creating a new bill.', () => {
+			document.body.innerHTML = BillsUI({ data: bills })
+			const billContainer = new Bills({ document, onNavigate, store: mockStore, localStorage: localStorageMock })
+			const handleClickNewBill = jest.fn(billContainer.handleClickNewBill)
+			const newBillBouton = screen.getByTestId('btn-new-bill')
+			newBillBouton.addEventListener('click',handleClickNewBill)
+			userEvent.click(newBillBouton)
+			expect(newBillBouton).toBeTruthy()
+			expect(handleClickNewBill).toHaveBeenCalled()
+			const expenseType = screen.getByTestId('expense-type')
+			expect(expenseType).toBeTruthy()
+		})
+
+
+
+		test('getBills() have been called.', () => {
+			document.body.innerHTML = BillsUI({ data: bills });
+			const billContainer = new Bills({ document, onNavigate, store: mockStore, localStorage: localStorageMock });
+			// Espionner la méthode getBills
+			const getBillData = jest.spyOn(billContainer, 'getBills');
+			// Appeler la méthode getBills()
+			const datas = billContainer.getBills();
+			// Vérifier si getBills a été appelée
+			expect(getBillData).toHaveBeenCalled();
+			expect(datas).not.toBe(null);
+		      });
   })
 })
 
 //test d'intégration GET
 describe('Given I am a user connected as employee', () => {
 	describe('When I am on Bills page', () => {
-
-
-		// test("fetches bills from mock API GET", async () => {
-		// 	localStorage.setItem("user", JSON.stringify({ type: "Admin", email: "a@a" }));
-		// 	const root = document.createElement("div")
-		// 	root.setAttribute("id", "root")
-		// 	document.body.append(root)
-		// 	router()
-		// 	window.onNavigate(ROUTES_PATH.Dashboard)
-		// 	await waitFor(() => screen.getByText("Validations"))
-		// 	const contentPending  = await screen.getByText("En attente (1)")
-		// 	expect(contentPending).toBeTruthy()
-		// 	const contentRefused  = await screen.getByText("Refusé (2)")
-		// 	expect(contentRefused).toBeTruthy()
-		// 	expect(screen.getByTestId("title")).toBeTruthy()
-		//       })
-
-
 		test('fetches bills from mock API GET', async () => {
 
                          //Je charge le dom avec les factures
@@ -121,6 +130,8 @@ describe('Given I am a user connected as employee', () => {
 			expect(screen.getByTestId('tbody').innerHTML).toBeTruthy()
 			const title = screen.getByTestId("title");
 			expect(title).toBeTruthy()
+			const newBill = screen.getByTestId("btn-new-bill");
+			expect(newBill).toBeTruthy()
 		})
 
 		describe('When an error occurs on API', () => {
