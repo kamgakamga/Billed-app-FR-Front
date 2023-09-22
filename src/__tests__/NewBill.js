@@ -129,6 +129,183 @@ describe("Given I am connected as an employee", () => {
 
 
 
+  // test('fills and submits the form', () => {
+  //   // Mock de la fonction de soumission du formulaire
+  //   const handleSubmit = jest.fn();
+  //   render(<Form onSubmit={handleSubmit} />);
+  
+  //   // Récupérez les éléments du formulaire
+  //   const expenseType = screen.getByTestId('expense-type');
+  //   const expenseName = screen.getByTestId('expense-name');
+  //   const datePicker = screen.getByTestId('datepicker');
+  //   const amount = screen.getByTestId('amount');
+  //   const vat = screen.getByTestId('vat');
+  //   const pct = screen.getByTestId('pct');
+  //   const commentary = screen.getByTestId('commentary');
+  //   const file = screen.getByTestId('file');
+  //   const submitButton = screen.getByText('Envoyer');
+  
+  //   // Remplissez les champs du formulaire
+  //   fireEvent.change(expenseType, { target: { value: 'Transports' } });
+  //   fireEvent.change(expenseName, { target: { value: 'Vol Paris Londres' } });
+  //   fireEvent.change(datePicker, { target: { value: '2022-01-01' } });
+  //   fireEvent.change(amount, { target: { value: '348' } });
+  //   fireEvent.change(vat, { target: { value: '70' } });
+  //   fireEvent.change(pct, { target: { value: '20' } });
+  //   fireEvent.change(commentary, { target: { value: 'Commentaire de test' } });
+  //   fireEvent.change(file, { target: { files: [new File([''], 'test-image.jpg', { type: 'image/jpeg' })] } });
+  
+  //   // Soumettez le formulaire
+  //   fireEvent.click(submitButton);
+  
+  //   // Vérifiez si la fonction de soumission a été appelée avec les bonnes valeurs
+  //   expect(handleSubmit).toHaveBeenCalledWith({
+  //     expenseType: 'Transports',
+  //     expenseName: 'Vol Paris Londres',
+  //     date: '2022-01-01',
+  //     amount: '348',
+  //     vat: '70',
+  //     pct: '20',
+  //     commentary: 'Commentaire de test',
+  //     file: expect.any(File),
+  //   });
+  // });
+
+
+
+
+
+
+  describe("When I am ond NewBill Page", () => {
+    test("Then ...", () => {
+      const html = NewBillUI()
+      document.body.innerHTML = html
+     
+    const inputTypeDepense = screen.getByLabelText('Type de dépense');
+    const inputNomDepense = screen.getByLabelText('Nom de la dépense');
+    const inputDate = screen.getByLabelText('Date');
+    const inputMontantTTC = screen.getByLabelText('Montant TTC');
+    const inputTVA = screen.getByLabelText('TVA');
+    const inputPourcentage = screen.getByLabelText('%');
+    const textareaCommentaire = screen.getByLabelText('Commentaire');
+    const inputJustificatif = screen.getByLabelText('Justificatif');
+     
+     
+    fireEvent.change(inputTypeDepense, { target: { value: 'New Input Value' } });
+    fireEvent.change(inputNomDepense, { target: { value: 'New Textarea Value' } });
+    fireEvent.change(inputDate, { target: { value: 'New Option Value' } });  
+    fireEvent.change(inputMontantTTC, { target: { value: 'New Input Value' } });
+    fireEvent.change(inputTVA, { target: { value: 'New Textarea Value' } });
+    fireEvent.change(inputPourcentage, { target: { value: 'New Option Value' } }); 
+    fireEvent.change(textareaCommentaire, { target: { value: 'New Input Value' } });
+    fireEvent.change(inputJustificatif, { target: { value: 'New Textarea Value' } });
+
+    expect(inputTypeDepense.value).toBe('New Input Value');
+    expect(inputNomDepense.value).toBe('New Textarea Value');
+    expect(inputDate.value).toBe('New Option Value');
+    expect(inputMontantTTC.value).toBe('New Input Value');
+    expect(inputTVA.value).toBe('New Textarea Value');
+    expect(inputPourcentage.value).toBe('New Option Value');
+    expect(textareaCommentaire.value).toBe('New Input Value');
+    expect(inputJustificatif.value).toBe('New Textarea Value');
+
+     
+     
+      // je m'assure que le bouton envoye est present sur le dom
+      expect(document.querySelector('#btn-send-bill')).toBeTruthy();
+      expect(document.querySelector('input[type="file"]')).toBeTruthy();
+      expect(document.querySelector('input[data-testid="vat"]')).toBeTruthy();
+      expect(document.querySelector('input[data-testid="pct"]')).toBeTruthy();
+      expect(document.querySelector('select[data-testid="expense-type"]')).toBeTruthy();
+      //to-do write assertion
+    })
+
+    describe('When I am on NewBill Page', () => {
+      // beforeEach(() => {
+      //   const user = JSON.stringify({
+      //     type: 'Employee',
+      //     email:'employee@test.tdl',
+      //   })
+      //   window.localStorage.setItem('user', user)
+  
+      //   const pathname = ROUTES_PATH['NewBill']
+      //   Object.defineProperty(window, 'location', {
+      //     value: {
+      //       hash: pathname,
+      //     },
+      //   })
+  
+      //   document.body.innerHTML = `<div id="root"></div>`
+      //   Router()
+      // })
+  
+      test('should require the input type', () => {
+        const inputType = screen.getByTestId('expense-type')
+        expect(inputType).toBeInTheDocument();
+      })
+      test('should require the input type date', () => {
+        const inputDate = screen.getByTestId('datepicker')
+        expect(inputDate).toBeInTheDocument();
+      })
+      test('should require the input type number amount', () => {
+        const inputAmount = screen.getByTestId('amount')
+        expect(inputAmount).toBeRequired()
+      })
+      it('should require the input type number pct', () => {
+        const inputPct = screen.getByTestId('pct')
+        expect(inputPct).toBeRequired()
+      })
+      test('should require the inupt number vat', () => {
+        const inputVat = screen.getByTestId('vat')
+        expect(inputVat).not.toBeRequired()
+      })
+      test('should require the input type file', () => {
+        const inputfile = screen.getByTestId('file')
+        expect(inputfile).toBeRequired;
+      })
+    })
+
+    describe('When I do not fill fields && I click on submit button', () => {
+      it('should renders NewBill original page', () => {
+        const inputName = screen.getByTestId('expense-name')
+        expect(inputName.getAttribute('placeholder')).toBe('Vol Paris Londres')
+        expect(inputName.value).toBe('')
+  
+        const inputDate = screen.getByTestId('datepicker')
+        expect(inputDate.value).toBe('')
+  
+        const inputAmount = screen.getByTestId('amount')
+        expect(inputAmount.getAttribute('placeholder')).toBe('348')
+        expect(inputAmount.value).toBe('')
+  
+        const inputVat = screen.getByTestId('vat')
+        expect(inputVat.getAttribute('placeholder')).toBe('70')
+        expect(inputVat.value).toBe('')
+  
+        const inputPct = screen.getByTestId('pct')
+        expect(inputPct.getAttribute('placeholder')).toBe('20')
+        expect(inputPct.value).toBe('')
+  
+        const inputComment = screen.getByTestId('commentary')
+        expect(inputComment.value).toBe('')
+  
+        const inputFile = screen.getByTestId('file')
+        expect(inputFile.value).toBe('')
+  
+        const form = screen.getByTestId('form-new-bill')
+        userEvent.click(form)
+        expect(screen.getByTestId('form-new-bill')).toBeTruthy()
+      })
+    }) 
+  })
+
+
+
+
+
+
+
+
 
 	describe('When I select the file', () => {
 		it('should not upload the file when the file is wrong && handleChangeFile function is called', async () => {
@@ -366,6 +543,10 @@ describe("Given I am connected as an employee", () => {
         expect(message).toBeTruthy();
       })
 
+
+
+
+      
       test('should add a bill to API and fails with 404 message error', async () => {
         mockStore.bills.mockImplementationOnce(() => {
           return {
